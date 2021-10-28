@@ -1,5 +1,5 @@
 from os import error
-from flask import Blueprint, render_template, request, flash, redirect
+from flask import Blueprint, render_template, request, redirect
 from sqlalchemy import text
 from flask.helpers import url_for
 
@@ -32,11 +32,11 @@ def song():
                 db.session.add(record)
                 db.session.commit()
             except Exception as e:
-                db_session.rollback()
-                db_session.flush()
+                db.session.rollback()
+                db.session.flush()
 
             # check if success or failure and render corresponding page
-            return render_template('views.song_feedback', value=insertion_success)
+            return render_template('song_feedback.html', value=insertion_success)
 
             
         else:                                      # so create a route for maintenance too btw
@@ -57,11 +57,11 @@ def artist():
                 db.session.add(record)
                 db.session.commit()
             except Exception as e:
-                db_session.rollback()
-                db_session.flush()
+                db.session.rollback()
+                db.session.flush()
 
             # check if success or failure and render corresponding page
-            return render_template('views.artist_feedback' ,value=insertion_success)
+            return render_template('artist_feedback.html' ,value=insertion_success)
 
            
         else:                                      # so create a route for maintenance too btw
@@ -82,11 +82,11 @@ def band():
                 db.session.commit()
 
             except Exception as e:
-                db_session.rollback()
-                db_session.flush()
+                db.session.rollback()
+                db.session.flush()
 
             # check if success or failure and render corresponding page
-            return render_template('views.band_feedback', value=insertion_success)
+            return render_template('band_feedback.html', value=insertion_success)
 
             
         else:                                      # so create a route for maintenance too btw
@@ -109,11 +109,11 @@ def singer():
                 db.session.commit()
 
             except Exception as e:
-                db_session.rollback()
-                db_session.flush()
+                db.session.rollback()
+                db.session.flush()
 
             # check if success or failure and render corresponding page
-            return render_template('views.singer_feedback', value=insertion_success)
+            return render_template('singer_feedback.html', value=insertion_success)
         else:                                      # so create a route for maintenance too btw
             return render_template('singer.html')
     return render_template('singer.html')
@@ -133,11 +133,11 @@ def album():
                 db.session.commit()
 
             except Exception as e:
-                    db_session.rollback()
-                    db_session.flush()
+                    db.session.rollback()
+                    db.session.flush()
 
             # check if success or failure and render corresponding page
-            return render_template('views.album_feedback', value=insertion_success)
+            return render_template('album_feedback.html', value=insertion_success)
 
             
         else:                                      # so create a route for maintenance too btw
@@ -159,11 +159,11 @@ def genre():
                 db.session.add(record)
                 db.session.commit()
             except Exception as e:
-                db_session.rollback()
-                db_session.flush()
+                db.session.rollback()
+                db.session.flush()
 
             # check if success or failure and render corresponding page
-            return render_template('views.genre_feedback', value=insertion_success)
+            return render_template('genre_feedback.html', value=insertion_success)
         else:                                      
             return render_template('genre.html')
     return render_template('genre.html')
@@ -182,11 +182,11 @@ def rating():
                 db.session.add(record)
                 db.session.commit()
             except Exception as e:
-                db_session.rollback()
-                db_session.flush()
+                db.session.rollback()
+                db.session.flush()
 
             # check if success or failure and render corresponding page
-            return render_template('views.rating_feedback', value=insertion_success)
+            return render_template('rating_feedback.html', value=insertion_success)
         else:                                      
             return render_template('rating.html')
     return render_template('rating.html')
@@ -202,14 +202,15 @@ def feature():
             insertion_success = False
             try:
                 id = request.form.get('sid')
-                db.session.add(id)
+                record = Feature(id)
+                db.session.add(record)
                 db.session.commit()
             except Exception as e:
-                db_session.rollback()
-                db_session.flush()
+                db.session.rollback()
+                db.session.flush()
 
             # check if success or failure and render corresponding page
-            return render_template('views.feature_feedback', value=insertion_success)
+            return render_template('feature_feedback.html', value=insertion_success)
 
         else:                                      
             return render_template('rating.html')
@@ -233,11 +234,11 @@ def created():
                 insertion_success = True
 
             except Exception as e:
-                db_session.rollback()
-                db_session.flush()
+                db.session.rollback()
+                db.session.flush()
 
             # check if success or failure and render corresponding page
-            return render_template('views.created_feedback', value=insertion_success)
+            return render_template('created_feedback.html', value=insertion_success)
 
             #if input was correct go back to maintenance page
         else:                                      # so create a route for maintenance too btw
@@ -255,17 +256,17 @@ def produce():
         if artist_id and album_id and release_year:
             insertion_success = False
             try:
-                new_produced_song = Produce(artist_id, album_id, release_year)
+                new_produced_song = Produce_a(artist_id, album_id, release_year)
                 db.session.add(new_produced_song)
                 db.session.commit()
                 insertion_success = True
 
             except Exception as e:
-                db_session.rollback()
-                db_session.flush()
+                db.session.rollback()
+                db.session.flush()
 
             # check if success or failure and render corresponding page
-            return render_template('views.produce_feedback', value=insertion_success)
+            return render_template('produce_feedback.html', value=insertion_success)
 
         else:                                      # so create a route for maintenance too btw
             return render_template('produce.html')
@@ -287,11 +288,11 @@ def song_fb():
                 insertion_success = True
 
             except Exception as e:
-                db_session.rollback()
-                db_session.flush()
+                db.session.rollback()
+                db.session.flush()
 
             # check if success or failure and render corresponding page
-            return render_template('views.song_fb_feedback', value=insertion_success)
+            return render_template('song_fb_feedback.html', value=insertion_success)
         else:                                      # so create a route for maintenance too btw
             return render_template('song_fb.html')
     return render_template('song_fb.html')
@@ -307,16 +308,18 @@ def featured():
             insertion_success = False
             try:
                 new_featured_song = Featured(artist_id, sid, artist_count)
+                print("HELLOOOOOOOO!!")
                 db.session.add(new_featured_song)
                 db.session.commit()
                 insertion_success = True
 
             except Exception as e:
-                db_session.rollback()
-                db_session.flush()
+                print("FUCKKKKKK!!")
+                db.session.rollback()
+                db.session.flush()
 
             # check if success or failure and render corresponding page
-            return render_template('views.feeatured_feedback', value=insertion_success)
+            return render_template('featured_feedback.html', value=insertion_success)
 
             
         else:                                      # so create a route for maintenance too btw

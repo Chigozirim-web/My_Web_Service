@@ -104,7 +104,7 @@ class Created(db.Model):
     Ar = db.relationship('Artist')
 
 
-class Produce(db.Model):
+class Produce_a(db.Model):
     __tablename__ = 'produce'
     artist_id = db.Column(db.Integer, db.ForeignKey('Artist.id'))
     album_id = db.Column(db.Integer, db.ForeignKey('Album.id'), primary_key=True)
