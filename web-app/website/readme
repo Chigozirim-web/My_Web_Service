@@ -4,4 +4,5 @@ the code for the writing of the data to mysql database is in views.py file.
 Just one route(Song) has been created
 11 more (7 entities and 5 relationships) still have to be created
 
-
+**
+Double check the links after creating route, to make sure it rhymes with the html files
