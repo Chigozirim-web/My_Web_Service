@@ -239,7 +239,7 @@ def song_fb():
                 db_session.flush()
 
             # check if success or failure and render corresponding page
-            return render_template('views.produce_feedback' value=insertion_success)
+            return render_template('views.song_fb_feedback' value=insertion_success)
         else:                                      # so create a route for maintenance too btw
             return render_template('song_fb.html')
     return render_template('song_fb.html')
@@ -264,7 +264,7 @@ def featured():
                 db_session.flush()
 
             # check if success or failure and render corresponding page
-            return render_template('views.produce_feedback' value=insertion_success)
+            return render_template('views.feeatured_feedback' value=insertion_success)
 
             
         else:                                      # so create a route for maintenance too btw
