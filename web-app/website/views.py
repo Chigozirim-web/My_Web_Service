@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, flash, redirect
 from sqlalchemy import text
 from flask.helpers import url_for
 
-from .model import db, Song, Artist, Band, Singer, Album, Genre, Rating 
+from .model import db, Song, Artist, Band, Singer, Album, Genre, Rating, Created, Featured, Produce_a, Song_fb
 
 views = Blueprint('views', __name__)
 
