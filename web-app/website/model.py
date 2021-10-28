@@ -92,7 +92,9 @@ class Created(db.Model):
     artist_id = db.Column(db.Integer, db.ForeignKey('Artist.id'))
     release_year = db.Column(db.Integer)
 
-    def __init__(self, year):
+    def __init__(self, sid, aid, year):
+        self.song_id = sid
+        self.artist_id = aid
         self.release_year = year
 
     s = db.relationship('Song')
@@ -105,8 +107,11 @@ class Produce_a(db.Model):
     album_id = db.Column(db.Integer, db.ForeignKey('Album.id'), primary_key=True)
     release_year = db.Column(db.Integer)
 
-    def __init__(self, year):
+    def __init__(self, aid, alid, year):
+        self.artist_id = aid
+        self.album_id = alid
         self.release_year = year
+        
 
     s = db.relationship('Song')
     al = db.relationship('Album')
@@ -118,7 +123,9 @@ class Song_fb(db.Model):
     feedback_id = db.Column (db.Integer, db.ForeignKey('Rating.id'), primary_key=True)
     reference =  db.Column(db.String(128))
 
-    def __init__(self, reference):
+    def __init__(self, sid, fid, reference):
+        self.song_id = sid
+        self.feedback_id = fid
         self.reference = reference
 
     s = db.relationship('Song')
@@ -128,11 +135,13 @@ class Song_fb(db.Model):
 class Featured(db.Model): 
     __tablename__ = 'featured'
     artist_id = db.Column (db.Integer, db.ForeignKey('Artist.id'))
-    sid = db.Column(db.Integer, db.ForeignKey('Feature.song_id'), primary_key=True)
+    song_id = db.Column(db.Integer, db.ForeignKey('Feature.song_id'), primary_key=True)
     artist_count = db.column(db.Integer)
 
-    #def __init__(self, num):
-    #    self.artist_count = num
+    def __init__(self, aid, sid, num):
+        self.artist_id = aid
+        self.song_id = sid
+        self.artist_count = num
     
     ar = db.relationship('Artist')
     f = db.relationship('Feature')
