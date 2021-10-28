@@ -147,17 +147,17 @@ def rating():
 
 
 @views.route('/feature', methods=['POST', 'GET'])
-def rating():  
+def feature():  
     if request.method == 'POST':
         name = request.form.get('name')
-         song = Song.query.filter_by(song_name=name)
+        song = Song.query.filter_by(song_name=name)
 
         if song:
             id = request.form.get('sid')
-            db.session.add(id)
+            record = Feature(id)
+            db.session.add(record)
             db.session.commit()
 
-            flash(f"{record} sucessfully added!", category='success')
             return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
         else:                                      
             return render_template('rating.html')
@@ -237,6 +237,7 @@ def featured():
         else:                                      # so create a route for maintenance too btw
             return render_template('featured.html')
     return render_template('featured.html')
+    
 
 def check():  # just error checking if the database connected
     try:

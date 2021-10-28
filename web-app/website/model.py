@@ -79,6 +79,9 @@ class Rating(db.Model):
 class Feature(db.Model):
     __tablename__ = 'Feature'
     song_id = db.Column(db.Integer, db.ForeignKey('Song.id'), primary_key=True)
+    
+    def __init__(self, sid):
+        self.song_id = sid
 
     s = db.relationship('Song')
     
