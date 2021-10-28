@@ -86,7 +86,7 @@ class Feature(db.Model):
 # RELATIONSHIPS
 
 
-class created(db.Model):
+class Created(db.Model):
     __tablename__ = 'created'
     song_id = db.Column (db.Integer, db.ForeignKey('Song.id'), primary_key=True)
     artist_id = db.Column(db.Integer, db.ForeignKey('Artist.id'))
@@ -99,7 +99,7 @@ class created(db.Model):
     Ar = db.relationship('Artist')
 
 
-class produce_a(db.Model):
+class Produce(db.Model):
     __tablename__ = 'produce'
     artist_id = db.Column(db.Integer, db.ForeignKey('Artist.id'))
     album_id = db.Column(db.Integer, db.ForeignKey('Album.id'), primary_key=True)
@@ -112,7 +112,7 @@ class produce_a(db.Model):
     al = db.relationship('Album')
 
 
-class song_fb(db.Model):
+class Song_fb(db.Model):
     __tablename__ = 'song_fb'
     song_id = db.Column(db.Integer, db.ForeignKey('Song.id'), primary_key=True)
     feedback_id = db.Column (db.Integer, db.ForeignKey('Rating.id'), primary_key=True)
@@ -125,7 +125,7 @@ class song_fb(db.Model):
     r = db.relationship('Rating')
 
 
-class featured(db.Model): 
+class Featured(db.Model): 
     __tablename__ = 'featured'
     artist_id = db.Column (db.Integer, db.ForeignKey('Artist.id'))
     sid = db.Column(db.Integer, db.ForeignKey('Feature.song_id'), primary_key=True)

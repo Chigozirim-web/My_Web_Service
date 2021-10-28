@@ -30,7 +30,7 @@ def song():
             db.session.add(record)
             db.session.commit()
 
-            flash(f"{record} sucessfully added!", category='success')
+            # flash(f"{record} sucessfully added!", category='success')
             return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
         else:                                      # so create a route for maintenance too btw
             return render_template('song.html')
@@ -48,7 +48,7 @@ def artist():
             db.session.add(record)
             db.session.commit()
 
-            flash(f"{record} sucessfully added!", category='success')
+            # flash(f"{record} sucessfully added!", category='success')
             return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
         else:                                      # so create a route for maintenance too btw
             return render_template('artist.html')
@@ -65,7 +65,7 @@ def band():
             db.session.add(record)
             db.session.commit()
 
-            flash(f"{record} sucessfully added!", category='success')
+            # flash(f"{record} sucessfully added!", category='success')
             return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
         else:                                      # so create a route for maintenance too btw
             return render_template('band.html')
@@ -84,7 +84,7 @@ def singer():
             db.session.add(record)
             db.session.commit()
 
-            flash(f"{record} sucessfully added!", category='success')
+            # flash(f"{record} sucessfully added!", category='success')
             return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
         else:                                      # so create a route for maintenance too btw
             return render_template('singer.html')
@@ -102,7 +102,7 @@ def album():
             db.session.add(record)
             db.session.commit()
 
-            flash(f"{record} sucessfully added!", category='success')
+            # flash(f"{record} sucessfully added!", category='success')
             return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
         else:                                      # so create a route for maintenance too btw
             return render_template('album.html')
@@ -121,7 +121,7 @@ def genre():
             db.session.add(record)
             db.session.commit()
 
-            flash(f"{record} sucessfully added!", category='success')
+            # flash(f"{record} sucessfully added!", category='success')
             return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
         else:                                      
             return render_template('genre.html')
@@ -138,12 +138,13 @@ def rating():
             db.session.add(record)
             db.session.commit()
 
-            flash(f"{record} sucessfully added!", category='success')
+            # flash(f"{record} sucessfully added!", category='success')
             return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
         else:                                      
             return render_template('rating.html')
     return render_template('rating.html')
 
+# relationship
 @views.route('/created', methods=['POST', 'GET'])
 def created():  
     if request.method == 'POST':
@@ -152,12 +153,21 @@ def created():
         release_year = request.form.get('ry')
 
         if song_id and artist_id and release_year:
-            new_created_song = created(song_id, artist_id, release_year)
-            db.session.add(new_created_song)
-            db.session.commit()
+            insertion_success = False
+            try:
+                new_created_song = Created(song_id, artist_id, release_year)
+                db.session.add(new_created_song)
+                db.session.commit()
+                insertion_success = True
 
-            flash(f"{new_created_song} sucessfully added!", category='success')
-            return redirect(url_for('views.home'))  #if input was correct go back to maintenance page
+            except Exception as e:
+                db_session.rollback()
+                db_session.flush()
+
+            # check if success or failure and render corresponding page
+            return render_template('views.created_feedback' value=insertion_success)
+
+            #if input was correct go back to maintenance page
         else:                                      # so create a route for maintenance too btw
             return render_template('created.html')
     return render_template('created.html')
@@ -170,12 +180,20 @@ def produce():
         release_year = request.form.get('ry')
 
         if artist_id and album_id and release_year:
-            new_produced_song = created(artist_id, album_id, release_year)
-            db.session.add(new_produced_song)
-            db.session.commit()
+            insertion_success = False
+            try:
+                new_produced_song = Produce(artist_id, album_id, release_year)
+                db.session.add(new_produced_song)
+                db.session.commit()
+                insertion_success = True
 
-            flash(f"{new_produced_song} sucessfully added!", category='success')
-            return redirect(url_for('views.home'))  #if input was correct go back to maintenance page
+            except Exception as e:
+                db_session.rollback()
+                db_session.flush()
+
+            # check if success or failure and render corresponding page
+            return render_template('views.produce_feedback' value=insertion_success)
+
         else:                                      # so create a route for maintenance too btw
             return render_template('produce.html')
     return render_template('produce.html')
@@ -188,12 +206,19 @@ def song_fb():
         reference = request.form.get('reference')
 
         if song_id and feedback_id and reference:
-            new_feedback_song = created(song_id, feedback_id, reference)
-            db.session.add(new_feedback_song)
-            db.session.commit()
+            insertion_success = False
+            try:
+                new_feedback_song = Song_fb(song_id, feedback_id, reference)
+                db.session.add(new_feedback_song)
+                db.session.commit()
+                insertion_success = True
 
-            flash(f"{new_feedback_song} sucessfully added!", category='success')
-            return redirect(url_for('views.home'))  #if input was correct go back to maintenance page
+            except Exception as e:
+                db_session.rollback()
+                db_session.flush()
+
+            # check if success or failure and render corresponding page
+            return render_template('views.produce_feedback' value=insertion_success)
         else:                                      # so create a route for maintenance too btw
             return render_template('song_fb.html')
     return render_template('song_fb.html')
@@ -206,12 +231,21 @@ def featured():
         artist_count = request.form.get('ac')
 
         if artist_id and sid and artist_count:
-            new_featured_song = created(artist_id, sid, artist_count)
-            db.session.add(new_featured_song)
-            db.session.commit()
+            insertion_success = False
+            try:
+                new_featured_song = Featured(artist_id, sid, artist_count)
+                db.session.add(new_featured_song)
+                db.session.commit()
+                insertion_success = True
 
-            flash(f"{new_featured_song} sucessfully added!", category='success')
-            return redirect(url_for('views.home'))  #if input was correct go back to maintenance page
+            except Exception as e:
+                db_session.rollback()
+                db_session.flush()
+
+            # check if success or failure and render corresponding page
+            return render_template('views.produce_feedback' value=insertion_success)
+
+            
         else:                                      # so create a route for maintenance too btw
             return render_template('featured.html')
     return render_template('featured.html')
