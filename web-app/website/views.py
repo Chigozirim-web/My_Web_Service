@@ -33,6 +33,24 @@ def song():
             return render_template('song.htm')
     return render_template('song.htm')
 
+@views.route('/created', methods=['POST', 'GET'])
+def created():  
+    if request.method == 'POST':
+        song_id = request.form.get('song')
+        artist_id = request.form.get('artist')
+        release_year = request.form.get('ry')
+
+        if song_name and artist_name and release_year:
+            new_created_song = created(song_id, artist_id, release_year)
+            db.session.add(new_created_song)
+            db.session.commit()
+
+            flash(f"{record} sucessfully added!", category='success')
+            return redirect(url_for('views.home'))  #if input was correct go back to maintenance page
+        else:                                      # so create a route for maintenance too btw
+            return render_template('created.html')
+    return render_template('created.html')
+
 def check():  # just error checking if the database connected
     try:
         db.session.query(text('1')).from_statement(text('SELECT 1')).all()
