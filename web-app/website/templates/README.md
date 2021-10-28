@@ -6,10 +6,10 @@ AND MAKING SURE THE INSERTION WORKS
 HOWEVER, THE OTHER HTML FILES HAVE TO BE MODIFIED TO HAVE A NAME ATTRIBUTE IN THE INPUT TAGS JUST LIKE IN THIS "song.htm" FILE
 
 EG.:
-
-  <form>
+ 
+ " <form>
    .......
   <input ...... name="year" ......>
-   ......
+   ...... "
     
-    or sth like that
+   or sth like that
