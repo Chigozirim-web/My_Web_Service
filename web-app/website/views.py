@@ -15,7 +15,7 @@ def home():
 def imprint():
     return render_template('imprint.html')
 
-@views.route('/maintenance)
+@views.route('/maintenance')
 def maintenance():
    return render_template('maintenance.html')
 
