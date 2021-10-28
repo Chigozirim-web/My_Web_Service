@@ -26,12 +26,19 @@ def song():
         song_length = request.form.get('length')
 
         if song_name and song_length:
-            record = Song(song_name, song_length)
-            db.session.add(record)
-            db.session.commit()
+            insertion_success = False
+            try:
+                record = Song(song_name, song_length)
+                db.session.add(record)
+                db.session.commit()
+            except Exception as e:
+                db_session.rollback()
+                db_session.flush()
 
-            # flash(f"{record} sucessfully added!", category='success')
-            return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
+            # check if success or failure and render corresponding page
+            return render_template('views.song_feedback' value=insertion_success)
+
+            
         else:                                      # so create a route for maintenance too btw
             return render_template('song.html')
     return render_template('song.html')
@@ -44,12 +51,19 @@ def artist():
 
 
         if artist_name:
-            record = Artist(artist_name)
-            db.session.add(record)
-            db.session.commit()
+            insertion_success = False
+            try:
+                record = Artist(artist_name)
+                db.session.add(record)
+                db.session.commit()
+            except Exception as e:
+                db_session.rollback()
+                db_session.flush()
 
-            # flash(f"{record} sucessfully added!", category='success')
-            return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
+            # check if success or failure and render corresponding page
+            return render_template('views.artist_feedback' value=insertion_success)
+
+           
         else:                                      # so create a route for maintenance too btw
             return render_template('artist.html')
     return render_template('artist.html')
@@ -61,12 +75,20 @@ def band():
         band_form_year = request.form.get('year')
 
         if band_name and band_form_year:
-            record = Band(band_name, band_form_year)
-            db.session.add(record)
-            db.session.commit()
+            insertion_success = False
+            try:
+                record = Band(band_name, band_form_year)
+                db.session.add(record)
+                db.session.commit()
 
-            # flash(f"{record} sucessfully added!", category='success')
-            return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
+            except Exception as e:
+                db_session.rollback()
+                db_session.flush()
+
+            # check if success or failure and render corresponding page
+            return render_template('views.band_feedback' value=insertion_success)
+
+            
         else:                                      # so create a route for maintenance too btw
             return render_template('band.html')
     return render_template('band.html')
@@ -80,12 +102,18 @@ def singer():
         singer_birth_year = request.form.get('year')
 
         if singer_name and singer_birth_year:
-            record = Singer(singer_name, singer_birth_year)
-            db.session.add(record)
-            db.session.commit()
+            insertion_success = False
+            try:
+                record = Singer(singer_name, singer_birth_year)
+                db.session.add(record)
+                db.session.commit()
 
-            # flash(f"{record} sucessfully added!", category='success')
-            return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
+            except Exception as e:
+                db_session.rollback()
+                db_session.flush()
+
+            # check if success or failure and render corresponding page
+            return render_template('views.singer_feedback' value=insertion_success)
         else:                                      # so create a route for maintenance too btw
             return render_template('singer.html')
     return render_template('singer.html')
@@ -98,12 +126,20 @@ def album():
         album_name = request.form.get('name')
 
         if numTracks and album_name:
-            record = Album(numTracks, album_name)
-            db.session.add(record)
-            db.session.commit()
+            insertion_success = False
+            try:
+                record = Album(numTracks, album_name)
+                db.session.add(record)
+                db.session.commit()
 
-            # flash(f"{record} sucessfully added!", category='success')
-            return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
+        except Exception as e:
+                db_session.rollback()
+                db_session.flush()
+
+            # check if success or failure and render corresponding page
+            return render_template('views.album_feedback' value=insertion_success)
+
+            
         else:                                      # so create a route for maintenance too btw
             return render_template('album.html')
     return render_template('album.html')
@@ -117,12 +153,17 @@ def genre():
         genre_name = request.form.get('name')
 
         if genre_name:
-            record = Genre(genre_name)
-            db.session.add(record)
-            db.session.commit()
+            insertion_success = False
+            try:
+                record = Genre(genre_name)
+                db.session.add(record)
+                db.session.commit()
+            except Exception as e:
+                db_session.rollback()
+                db_session.flush()
 
-            # flash(f"{record} sucessfully added!", category='success')
-            return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
+            # check if success or failure and render corresponding page
+            return render_template('views.genre_feedback' value=insertion_success)
         else:                                      
             return render_template('genre.html')
     return render_template('genre.html')
@@ -135,12 +176,18 @@ def rating():
         stars = request.form.get('stars')
 
         if stars:
-            record = Rating(stars)
-            db.session.add(record)
-            db.session.commit()
+            insertion_success = False
+            try:
+                record = Rating(stars)
+                db.session.add(record)
+                db.session.commit()
 
-            # flash(f"{record} sucessfully added!", category='success')
-            return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
+           except Exception as e:
+                db_session.rollback()
+                db_session.flush()
+
+            # check if success or failure and render corresponding page
+            return render_template('views.rating_feedback' value=insertion_success)
         else:                                      
             return render_template('rating.html')
     return render_template('rating.html')
@@ -153,12 +200,18 @@ def rating():
          song = Song.query.filter_by(song_name=name)
 
         if song:
-            id = request.form.get('sid')
-            db.session.add(id)
-            db.session.commit()
+            insertion_success = False
+            try:
+                id = request.form.get('sid')
+                db.session.add(id)
+                db.session.commit()
+            except Exception as e:
+                db_session.rollback()
+                db_session.flush()
 
-            flash(f"{record} sucessfully added!", category='success')
-            return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
+            # check if success or failure and render corresponding page
+            return render_template('views.feature_feedback' value=insertion_success)
+
         else:                                      
             return render_template('rating.html')
     return render_template('rating.html')
