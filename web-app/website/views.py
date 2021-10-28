@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, flash, redirect
 from sqlalchemy import text
 from flask.helpers import url_for
 
-from .model import db, Song  #...also import all other classes too from models.py ie Artist etc...
+from .model import db, Song, Artist, Band, Singer, Album, Genre, Rating 
 
 views = Blueprint('views', __name__)
 
@@ -15,6 +15,9 @@ def home():
 def imprint():
     return render_template('imprint.html')
 
+@views.route('/maintenance)
+def maintenance():
+   return render_template('maintenance.html')
 
 @views.route('/song', methods=['POST', 'GET'])
 def song():  
@@ -28,10 +31,10 @@ def song():
             db.session.commit()
 
             flash(f"{record} sucessfully added!", category='success')
-            return redirect(url_for('views.home'))  #if input was correct go back to maintenance page
+            return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
         else:                                      # so create a route for maintenance too btw
-            return render_template('song.htm')
-    return render_template('song.htm')
+            return render_template('song.html')
+    return render_template('song.html')
 
 
 @views.route('/artist', methods=['POST', 'GET'])
@@ -46,10 +49,10 @@ def artist():
             db.session.commit()
 
             flash(f"{record} sucessfully added!", category='success')
-            return redirect(url_for('views.home'))  #if input was correct go back to maintenance page
+            return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
         else:                                      # so create a route for maintenance too btw
-            return render_template('artist.htm')
-    return render_template('artist.htm')
+            return render_template('artist.html')
+    return render_template('artist.html')
 
 @views.route('/band', methods=['POST', 'GET'])
 def band():  
@@ -63,10 +66,10 @@ def band():
             db.session.commit()
 
             flash(f"{record} sucessfully added!", category='success')
-            return redirect(url_for('views.home'))  #if input was correct go back to maintenance page
+            return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
         else:                                      # so create a route for maintenance too btw
-            return render_template('band.htm')
-    return render_template('band.htm')
+            return render_template('band.html')
+    return render_template('band.html')
 
 
 
@@ -82,10 +85,10 @@ def singer():
             db.session.commit()
 
             flash(f"{record} sucessfully added!", category='success')
-            return redirect(url_for('views.home'))  #if input was correct go back to maintenance page
+            return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
         else:                                      # so create a route for maintenance too btw
-            return render_template('singer.htm')
-    return render_template('singer.htm')
+            return render_template('singer.html')
+    return render_template('singer.html')
 
 
 @views.route('/album', methods=['POST', 'GET'])
@@ -100,10 +103,10 @@ def album():
             db.session.commit()
 
             flash(f"{record} sucessfully added!", category='success')
-            return redirect(url_for('views.home'))  #if input was correct go back to maintenance page
+            return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
         else:                                      # so create a route for maintenance too btw
-            return render_template('album.htm')
-    return render_template('album.htm')
+            return render_template('album.html')
+    return render_template('album.html')
 
 
 
@@ -119,10 +122,10 @@ def genre():
             db.session.commit()
 
             flash(f"{record} sucessfully added!", category='success')
-            return redirect(url_for('views.home'))  #if input was correct go back to maintenance page
-        else:                                      # so create a route for maintenance too btw
-            return render_template('genre.htm')
-    return render_template('genre.htm')
+            return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
+        else:                                      
+            return render_template('genre.html')
+    return render_template('genre.html')
 
 
 @views.route('/genre', methods=['POST', 'GET'])
@@ -136,10 +139,10 @@ def rating():
             db.session.commit()
 
             flash(f"{record} sucessfully added!", category='success')
-            return redirect(url_for('views.home'))  #if input was correct go back to maintenance page
-        else:                                      # so create a route for maintenance too btw
-            return render_template('rating.htm')
-    return render_template('rating.htm')
+            return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
+        else:                                      
+            return render_template('rating.html')
+    return render_template('rating.html')
 
 def check():  # just error checking if the database connected
     try:
