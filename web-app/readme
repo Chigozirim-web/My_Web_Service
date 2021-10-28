@@ -1,3 +1,5 @@
 
 The .env file contains environment variables
 But this hasn't been included in the dev python file (yet)
+
+To be run: main.py
