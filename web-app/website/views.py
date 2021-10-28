@@ -40,7 +40,43 @@ def created():
         artist_id = request.form.get('artist')
         release_year = request.form.get('ry')
 
-        if song_name and artist_name and release_year:
+        if song_id and artist_id and release_year:
+            new_created_song = created(song_id, artist_id, release_year)
+            db.session.add(new_created_song)
+            db.session.commit()
+
+            flash(f"{record} sucessfully added!", category='success')
+            return redirect(url_for('views.home'))  #if input was correct go back to maintenance page
+        else:                                      # so create a route for maintenance too btw
+            return render_template('created.html')
+    return render_template('created.html')
+
+@views.route('/produce', methods=['POST', 'GET'])
+def produce():  
+    if request.method == 'POST':
+        artist_id = request.form.get('artist')
+        album_id = request.form.get('album')
+        release_year = request.form.get('ry')
+
+        if artist_id and album_id and release_year:
+            new_produced_song = created(artist_id, album id, release_year)
+            db.session.add(new_produced_song)
+            db.session.commit()
+
+            flash(f"{record} sucessfully added!", category='success')
+            return redirect(url_for('views.home'))  #if input was correct go back to maintenance page
+        else:                                      # so create a route for maintenance too btw
+            return render_template('produce.html')
+    return render_template('produce.html')
+
+@views.route('/produced', methods=['POST', 'GET'])
+def created():  
+    if request.method == 'POST':
+        artist_id = request.form.get('song')
+        artist_id = request.form.get('artist')
+        release_year = request.form.get('ry')
+
+        if song_id and artist_id and release_year:
             new_created_song = created(song_id, artist_id, release_year)
             db.session.add(new_created_song)
             db.session.commit()
