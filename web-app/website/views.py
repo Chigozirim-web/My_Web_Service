@@ -22,7 +22,6 @@ def song():
     if request.method == 'POST':
         song_name = request.form.get('name')
         song_length = request.form.get('length')
-        print(song_name, song_length)
 
         if song_name and song_length:
             record = Song(song_name, song_length)
@@ -30,12 +29,12 @@ def song():
             db.session.commit()
 
             flash(f"{record} sucessfully added!", category='success')
-            return redirect(url_for('views.home'))
-        else:
+            return redirect(url_for('views.home'))  #if input was correct go back to maintenance page
+        else:                                      # so create a route for maintenance too btw
             return render_template('song.htm')
     return render_template('song.htm')
 
-def check():
+def check():  # just error checking if the database connected
     try:
         db.session.query(text('1')).from_statement(text('SELECT 1')).all()
         return '<h1>It works.</h1>'
