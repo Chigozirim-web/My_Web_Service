@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, flash, redirect
 from sqlalchemy import text
 from flask.helpers import url_for
 
-from .model import db, Song, Artist, Band, Singer, Album, Genre, Rating 
+from .model import db, Song, Artist, Band, Singer, Feature, Album, Genre, Rating, Created, Featured, Produce_a, Song_fb
 
 views = Blueprint('views', __name__)
 
@@ -128,7 +128,8 @@ def genre():
     return render_template('genre.html')
 
 
-@views.route('/genre', methods=['POST', 'GET'])
+
+@views.route('/rating', methods=['POST', 'GET'])
 def rating():  
     if request.method == 'POST':
         stars = request.form.get('stars')
@@ -144,7 +145,26 @@ def rating():
             return render_template('rating.html')
     return render_template('rating.html')
 
-# relationship
+
+@views.route('/feature', methods=['POST', 'GET'])
+def rating():  
+    if request.method == 'POST':
+        name = request.form.get('name')
+         song = Song.query.filter_by(song_name=name)
+
+        if song:
+            id = request.form.get('sid')
+            db.session.add(id)
+            db.session.commit()
+
+            flash(f"{record} sucessfully added!", category='success')
+            return redirect(url_for('views.maintenance'))  #if input was correct go back to maintenance page
+        else:                                      
+            return render_template('rating.html')
+    return render_template('rating.html')
+
+
+
 @views.route('/created', methods=['POST', 'GET'])
 def created():  
     if request.method == 'POST':
@@ -171,6 +191,7 @@ def created():
         else:                                      # so create a route for maintenance too btw
             return render_template('created.html')
     return render_template('created.html')
+
 
 @views.route('/produce', methods=['POST', 'GET'])
 def produce():  
