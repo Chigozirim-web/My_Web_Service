@@ -3,8 +3,7 @@ from flask import Blueprint, render_template, request, flash, redirect
 from sqlalchemy import text
 from flask.helpers import url_for
 
-#from website.app import AddRecord
-from .model import db, Song
+from .model import db, Song  #...also import all other classes too from models.py ie Artist etc...
 
 views = Blueprint('views', __name__)
 
