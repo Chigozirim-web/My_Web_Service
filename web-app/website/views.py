@@ -1,4 +1,3 @@
-###When you wake up 2moro, see def Song() for your working solution!!
 
 from os import error
 from flask import Blueprint, render_template, request, redirect
@@ -166,7 +165,7 @@ def created():
             return render_template('created_feedback.html', value=True)
 
         else:                                    
-            return render_template('created.html_feedback.html', value=False)
+            return render_template('created_feedback.html', value=False)
     return render_template('created.html')
 
 
@@ -197,6 +196,7 @@ def song_fb():
 
         if song_id and feedback_id and reference:
             new_feedback_song = Song_fb(song_id, feedback_id, reference)
+            print(new_feedback_song)
             db.session.add(new_feedback_song)
             db.session.commit()
             return render_template('song_fb_feedback.html', value=True)

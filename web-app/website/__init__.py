@@ -18,9 +18,10 @@ def create_app():
     Bootstrap(app)
 
     from .views import views
-
     app.register_blueprint(views, url_prefix='/')
 
+    from . import model
+    
     with app.app_context():
         db.create_all()
 

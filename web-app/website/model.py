@@ -1,5 +1,6 @@
 from . import db
 
+
 class Song(db.Model):
     __tablename__ = 'Song'
     id = db.Column(db.Integer, primary_key=True)
@@ -115,8 +116,8 @@ class Produce_a(db.Model):
 
 class Song_fb(db.Model):
     __tablename__ = 'song_fb'
-    song_id = db.Column(db.Integer, db.ForeignKey('Song.id'), primary_key=True)
-    feedback_id = db.Column (db.Integer, db.ForeignKey('Rating.id'), primary_key=True)
+    song_id = db.Column(db.Integer, primary_key=True)
+    feedback_id = db.Column (db.Integer)
     reference =  db.Column(db.String(128))
 
     def __init__(self, sid, fid, reference):
@@ -127,8 +128,8 @@ class Song_fb(db.Model):
 
 class Featured(db.Model): 
     __tablename__ = 'featured'
-    artist_id = db.Column (db.Integer, db.ForeignKey('Artist.id'))
-    song_id = db.Column(db.Integer, db.ForeignKey('Feature.song_id'), primary_key=True)
+    artist_id = db.Column (db.Integer)
+    song_id = db.Column(db.Integer, primary_key=True)
     artist_count = db.Column(db.Integer)
 
     def __init__(self, aid, sid, num):
