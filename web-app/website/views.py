@@ -252,7 +252,8 @@ def produce():
         artist_id = request.form.get('artist')
         album_id = request.form.get('album')
         release_year = request.form.get('ry')
-
+        print(artist_id, album_id, release_year)
+        
         if artist_id and album_id and release_year:
             insertion_success = False
             try:
@@ -320,7 +321,6 @@ def featured():
 
             # check if success or failure and render corresponding page
             return render_template('featured_feedback.html', value=insertion_success)
-
             
         else:                                      # so create a route for maintenance too btw
             return render_template('featured.html')
