@@ -101,7 +101,6 @@ def album():
 
 
 
-
 @views.route('/genre', methods=['POST', 'GET'])
 def genre():  
     if request.method == 'POST':
@@ -137,11 +136,10 @@ def rating():
 def feature():  
     if request.method == 'POST':
         name = request.form.get('name')
-        song = Song.query.filter_by(song_name=name)
+        sid = db.session.query(Song.id).filter_by(song_name=name)
 
-        if song:
-            id = request.form.get('sid')
-            record = Feature(id)
+        if sid:
+            record = Feature(sid)
             db.session.add(record)
             db.session.commit()
             return render_template('feature_feedback.html', value=True)
@@ -149,17 +147,20 @@ def feature():
             return render_template('feature_feedback.html', value=False)
     return render_template('feature.html')
 
-
+##RELATIONSHIP ROUTES
 
 @views.route('/created', methods=['POST', 'GET'])
 def created():  
     if request.method == 'POST':
-        song_id = request.form.get('song')
-        artist_id = request.form.get('artist')
+        song = request.form.get('song')
+        artist = request.form.get('artist')
         release_year = request.form.get('ry')
 
-        if song_id and artist_id and release_year:
-            new_created_song = Created(song_id, artist_id, release_year)
+        s = db.session.query(Song.id).filter_by(song_name=song)
+        ar = db.session.query(Artist.id).filter_by(artist_name=artist)
+
+        if s and ar and release_year:
+            new_created_song = Created(s, ar, release_year)
             db.session.add(new_created_song)
             db.session.commit()
             return render_template('created_feedback.html', value=True)
@@ -172,13 +173,16 @@ def created():
 @views.route('/produce', methods=['POST', 'GET'])
 def produce():  
     if request.method == 'POST':
-        artist_id = request.form.get('artist')
-        album_id = request.form.get('album')
+        artist = request.form.get('artist')
+        album = request.form.get('album')
         release_year = request.form.get('ry')
 
-        if artist_id and album_id and release_year:
-            new_produced_song = Produce_a(artist_id, album_id, release_year)
-            db.session.add(new_produced_song)
+        ar = db.session.query(Artist.id).filter_by(artist_name=artist)
+        al = db.session.query(Album.id).filter_by(album_name=album)
+
+        if ar and al and release_year:
+            new_produced_album = Produce_a(ar, al, release_year)
+            db.session.add(new_produced_album)
             db.session.commit()
 
             return redirect('produce_feedback.html', value=True)
@@ -190,12 +194,15 @@ def produce():
 @views.route('/song_fb', methods=['POST', 'GET'])
 def song_fb():  
     if request.method == 'POST':
-        song_id = request.form.get('song')
-        feedback_id = request.form.get('fb')
+        song = request.form.get('song')
+        feed = request.form.get('fb')
         reference = request.form.get('reference')
+        
+        s = db.session.query(Song.id).filter_by(song_name=song)
+        f = db.session.query(Rating.id).filter_by(stars=feed)
 
-        if song_id and feedback_id and reference:
-            new_feedback_song = Song_fb(song_id, feedback_id, reference)
+        if s and f and reference:
+            new_feedback_song = Song_fb(s, f, reference)
             print(new_feedback_song)
             db.session.add(new_feedback_song)
             db.session.commit()
@@ -208,12 +215,15 @@ def song_fb():
 @views.route('/featured', methods=['POST', 'GET'])
 def featured():  
     if request.method == 'POST':
-        artist_id = request.form.get('artist')
-        sid = request.form.get('song')
+        artist = request.form.get('artist')
+        song = request.form.get('song')
         artist_count = request.form.get('ac')
+        
+        ar = db.session.query(Artist.id).filter_by(artist_name=artist)
+        s = db.session.query(Song.id).filter_by(song_name=song)
 
-        if artist_id and sid and artist_count:
-            new_featured_song = Featured(artist_id, sid, artist_count)
+        if s and ar and artist_count:
+            new_featured_song = Featured(ar, s, artist_count)
             db.session.add(new_featured_song)
             db.session.commit()
             return render_template('featured_feedback.html', value=True)    

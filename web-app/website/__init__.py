@@ -7,7 +7,7 @@ from flask_bootstrap import Bootstrap
 db = SQLAlchemy()
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='static')
     app.config['SECRET_KEY'] = 'hhhhhettytiu'  #to encrypt cookies 
 
     app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://group7:KVSzuH@localhost/group7"   #location of this database

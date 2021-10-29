@@ -77,9 +77,9 @@ class Rating(db.Model):
 
 
 
-class Feature(db.Model):
+class Feature(db.Model):  #ISA Song
     __tablename__ = 'Feature'
-    song_id = db.Column(db.Integer, db.ForeignKey('Song.id'), primary_key=True)
+    song_id = db.Column(db.Integer, primary_key=True)
     
     def __init__(self, sid):
         self.song_id = sid
@@ -91,8 +91,8 @@ class Feature(db.Model):
 
 class Created(db.Model):
     __tablename__ = 'created'
-    song_id = db.Column (db.Integer, db.ForeignKey('Song.id'), primary_key=True)
-    artist_id = db.Column(db.Integer, db.ForeignKey('Artist.id'))
+    song_id = db.Column (db.Integer, primary_key=True)
+    artist_id = db.Column(db.Integer)
     release_year = db.Column(db.Integer)
 
     def __init__(self, sid, aid, year):
@@ -104,8 +104,8 @@ class Created(db.Model):
 
 class Produce_a(db.Model):
     __tablename__ = 'produce'
-    artist_id = db.Column(db.Integer, db.ForeignKey('Artist.id'))
-    album_id = db.Column(db.Integer, db.ForeignKey('Album.id'), primary_key=True)
+    artist_id = db.Column(db.Integer)
+    album_id = db.Column(db.Integer, primary_key=True)
     release_year = db.Column(db.Integer)
 
     def __init__(self, aid, alid, year):
@@ -117,7 +117,7 @@ class Produce_a(db.Model):
 class Song_fb(db.Model):
     __tablename__ = 'song_fb'
     song_id = db.Column(db.Integer, primary_key=True)
-    feedback_id = db.Column (db.Integer)
+    feedback_id = db.Column (db.Integer, primary_key=True)
     reference =  db.Column(db.String(128))
 
     def __init__(self, sid, fid, reference):
