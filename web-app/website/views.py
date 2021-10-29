@@ -1,3 +1,5 @@
+###When you wake up 2moro, see def Song() for your working solution!!
+
 from os import error
 from flask import Blueprint, render_template, request, redirect
 from sqlalchemy import text
@@ -26,21 +28,14 @@ def song():
         song_length = request.form.get('length')
 
         if song_name and song_length:
-            insertion_success = False
-            try:
-                record = Song(song_name, song_length)
-                db.session.add(record)
-                db.session.commit()
-            except Exception as e:
-                db.session.rollback()
-                db.session.flush()
+            record = Song(song_name, song_length)
+            db.session.add(record)
+            db.session.commit()
 
-            # check if success or failure and render corresponding page
-            return render_template('song_feedback.html', value=insertion_success)
+            return render_template('song_feedback.html', value=True)
 
-            
-        else:                                      # so create a route for maintenance too btw
-            return render_template('song.html')
+        else:                                    
+            return render_template('song_feedback.html', value=False)
     return render_template('song.html')
 
 
@@ -49,23 +44,13 @@ def artist():
     if request.method == 'POST':
         artist_name = request.form.get('name')
 
-
         if artist_name:
-            insertion_success = False
-            try:
-                record = Artist(artist_name)
-                db.session.add(record)
-                db.session.commit()
-            except Exception as e:
-                db.session.rollback()
-                db.session.flush()
-
-            # check if success or failure and render corresponding page
-            return render_template('artist_feedback.html' ,value=insertion_success)
-
-           
-        else:                                      # so create a route for maintenance too btw
-            return render_template('artist.html')
+            record = Artist(artist_name)
+            db.session.add(record)
+            db.session.commit()
+            return render_template('artist_feedback.html' ,value=True)   
+        else:                                      
+            return render_template('artist.html', value=False)
     return render_template('artist.html')
 
 @views.route('/band', methods=['POST', 'GET'])
@@ -252,23 +237,14 @@ def produce():
         artist_id = request.form.get('artist')
         album_id = request.form.get('album')
         release_year = request.form.get('ry')
-        print(artist_id, album_id, release_year)
-        
-        if artist_id and album_id and release_year:
-            insertion_success = False
-            try:
-                new_produced_song = Produce_a(artist_id, album_id, release_year)
-                db.session.add(new_produced_song)
-                db.session.commit()
-                insertion_success = True
 
-            except Exception as e:
-                db.session.rollback()
-                db.session.flush()
+        if artist_id and album_id and release_year:
+            new_produced_song = Produce_a(artist_id, album_id, release_year)
+            db.session.add(new_produced_song)
+            db.session.commit()
 
             # check if success or failure and render corresponding page
-            return render_template('produce_feedback.html', value=insertion_success)
-
+            return redirect('produce_feedback.html')
         else:                                      # so create a route for maintenance too btw
             return render_template('produce.html')
     return render_template('produce.html')
@@ -309,13 +285,11 @@ def featured():
             insertion_success = False
             try:
                 new_featured_song = Featured(artist_id, sid, artist_count)
-                print("HELLOOOOOOOO!!")
                 db.session.add(new_featured_song)
                 db.session.commit()
                 insertion_success = True
 
             except Exception as e:
-                print("FUCKKKKKK!!")
                 db.session.rollback()
                 db.session.flush()
 

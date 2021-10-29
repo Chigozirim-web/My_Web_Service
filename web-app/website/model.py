@@ -83,7 +83,6 @@ class Feature(db.Model):
     def __init__(self, sid):
         self.song_id = sid
 
-    s = db.relationship('Song')
     
     
 # RELATIONSHIPS
@@ -100,8 +99,6 @@ class Created(db.Model):
         self.artist_id = aid
         self.release_year = year
 
-    s = db.relationship('Song')
-    Ar = db.relationship('Artist')
 
 
 class Produce_a(db.Model):
@@ -116,10 +113,6 @@ class Produce_a(db.Model):
         self.release_year = year
         
 
-    s = db.relationship('Song')
-    al = db.relationship('Album')
-
-
 class Song_fb(db.Model):
     __tablename__ = 'song_fb'
     song_id = db.Column(db.Integer, db.ForeignKey('Song.id'), primary_key=True)
@@ -130,9 +123,6 @@ class Song_fb(db.Model):
         self.song_id = sid
         self.feedback_id = fid
         self.reference = reference
-
-    s = db.relationship('Song')
-    r = db.relationship('Rating')
 
 
 class Featured(db.Model): 
@@ -146,5 +136,3 @@ class Featured(db.Model):
         self.song_id = sid
         self.artist_count = num
     
-    ar = db.relationship('Artist')
-    f = db.relationship('Feature')
