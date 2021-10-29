@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>albums</title>
-</head>
-<body>
-    <div class="mb-3">
-        <label for="name" class="form-label">Album Name</label>
-        <input type="text" name = "name" class="form-control" id="formGroupExampleInput" placeholder="Enter album name">
-      </div>
-      <div class="mb-3">
-        <label for="length" class="form-label">Album Length</label>
-        <input type="number" step="1" name="length" class="form-control" id="formGroupExampleInput2" placeholder="Enter album Length">
-      </div>    
-
-      <br>
-      <a href="/feedfiles/albums.html">
-        <button type="button" class="btn btn-primary">Send message</button></body>
-        </a>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>albums</title>
+	</head>
+	<body style="text-align: center;">
+		<form method="post" action="/album">
+			<div class="mb-3">
+				<label for="name" class="form-label">Album Name</label>
+				<input type="text" name = "name" class="form-control" id="formGroupExampleInput" placeholder="Enter album name">
+			</div>
+			<div class="mb-3">
+				<label for="length" class="form-label">Album Length</label>
+				<input type="number" step="1" name="length" class="form-control" id="formGroupExampleInput2" placeholder="Enter album Length">
+			</div>    
+	
+			<br>
+			<button type="bsubmit" class="btn btn-primary">Send message</button>
+		</form>
+	</body>
 </html>

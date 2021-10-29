@@ -31,9 +31,7 @@ def song():
             record = Song(song_name, song_length)
             db.session.add(record)
             db.session.commit()
-
             return render_template('song_feedback.html', value=True)
-
         else:                                    
             return render_template('song_feedback.html', value=False)
     return render_template('song.html')
@@ -50,8 +48,9 @@ def artist():
             db.session.commit()
             return render_template('artist_feedback.html' ,value=True)   
         else:                                      
-            return render_template('artist.html', value=False)
+            return render_template('artist_feedback.html', value=False)
     return render_template('artist.html')
+
 
 @views.route('/band', methods=['POST', 'GET'])
 def band():  
@@ -60,22 +59,12 @@ def band():
         band_form_year = request.form.get('year')
 
         if band_name and band_form_year:
-            insertion_success = False
-            try:
-                record = Band(band_name, band_form_year)
-                db.session.add(record)
-                db.session.commit()
-
-            except Exception as e:
-                db.session.rollback()
-                db.session.flush()
-
-            # check if success or failure and render corresponding page
-            return render_template('band_feedback.html', value=insertion_success)
-
-            
-        else:                                      # so create a route for maintenance too btw
-            return render_template('band.html')
+            record = Band(band_name, band_form_year)
+            db.session.add(record)
+            db.session.commit()
+            return render_template('band_feedback.html', value=True)            
+        else:                                      
+            return render_template('band_feedback.html', value=False)
     return render_template('band.html')
 
 
@@ -87,20 +76,12 @@ def singer():
         singer_birth_year = request.form.get('year')
 
         if singer_name and singer_birth_year:
-            insertion_success = False
-            try:
-                record = Singer(singer_name, singer_birth_year)
-                db.session.add(record)
-                db.session.commit()
-
-            except Exception as e:
-                db.session.rollback()
-                db.session.flush()
-
-            # check if success or failure and render corresponding page
-            return render_template('singer_feedback.html', value=insertion_success)
-        else:                                      # so create a route for maintenance too btw
-            return render_template('singer.html')
+            record = Singer(singer_name, singer_birth_year)
+            db.session.add(record)
+            db.session.commit()
+            return render_template('singer_feedback.html', value=True)
+        else:                                     
+            return render_template('singer_feedback.html', value=False)
     return render_template('singer.html')
 
 
@@ -111,22 +92,12 @@ def album():
         album_name = request.form.get('name')
 
         if numTracks and album_name:
-            insertion_success = False
-            try:
-                record = Album(numTracks, album_name)
-                db.session.add(record)
-                db.session.commit()
-
-            except Exception as e:
-                    db.session.rollback()
-                    db.session.flush()
-
-            # check if success or failure and render corresponding page
-            return render_template('album_feedback.html', value=insertion_success)
-
-            
-        else:                                      # so create a route for maintenance too btw
-            return render_template('album.html')
+            record = Album(numTracks, album_name)
+            db.session.add(record)
+            db.session.commit()
+            return render_template('album_feedback.html', value=True)       
+        else:                                      
+            return render_template('album_feedback.html', value=False)
     return render_template('album.html')
 
 
@@ -138,19 +109,12 @@ def genre():
         genre_name = request.form.get('name')
 
         if genre_name:
-            insertion_success = False
-            try:
-                record = Genre(genre_name)
-                db.session.add(record)
-                db.session.commit()
-            except Exception as e:
-                db.session.rollback()
-                db.session.flush()
-
-            # check if success or failure and render corresponding page
-            return render_template('genre_feedback.html', value=insertion_success)
+            record = Genre(genre_name)
+            db.session.add(record)
+            db.session.commit()
+            return render_template('genre_feedback.html', value=True)
         else:                                      
-            return render_template('genre.html')
+            return render_template('genre_feedback.html', value=True)
     return render_template('genre.html')
 
 
@@ -161,19 +125,12 @@ def rating():
         stars = request.form.get('stars')
 
         if stars:
-            insertion_success = False
-            try:
-                record = Rating(stars)
-                db.session.add(record)
-                db.session.commit()
-            except Exception as e:
-                db.session.rollback()
-                db.session.flush()
-
-            # check if success or failure and render corresponding page
-            return render_template('rating_feedback.html', value=insertion_success)
+            record = Rating(stars)
+            db.session.add(record)
+            db.session.commit()
+            return render_template('rating_feedback.html', value=True)
         else:                                      
-            return render_template('rating.html')
+            return render_template('rating_feedback.html', value=False)
     return render_template('rating.html')
 
 
@@ -184,22 +141,14 @@ def feature():
         song = Song.query.filter_by(song_name=name)
 
         if song:
-            insertion_success = False
-            try:
-                id = request.form.get('sid')
-                record = Feature(id)
-                db.session.add(record)
-                db.session.commit()
-            except Exception as e:
-                db.session.rollback()
-                db.session.flush()
-
-            # check if success or failure and render corresponding page
-            return render_template('feature_feedback.html', value=insertion_success)
-
+            id = request.form.get('sid')
+            record = Feature(id)
+            db.session.add(record)
+            db.session.commit()
+            return render_template('feature_feedback.html', value=True)
         else:                                      
-            return render_template('rating.html')
-    return render_template('rating.html')
+            return render_template('feature_feedback.html', value=False)
+    return render_template('feature.html')
 
 
 
@@ -211,23 +160,13 @@ def created():
         release_year = request.form.get('ry')
 
         if song_id and artist_id and release_year:
-            insertion_success = False
-            try:
-                new_created_song = Created(song_id, artist_id, release_year)
-                db.session.add(new_created_song)
-                db.session.commit()
-                insertion_success = True
+            new_created_song = Created(song_id, artist_id, release_year)
+            db.session.add(new_created_song)
+            db.session.commit()
+            return render_template('created_feedback.html', value=True)
 
-            except Exception as e:
-                db.session.rollback()
-                db.session.flush()
-
-            # check if success or failure and render corresponding page
-            return render_template('created_feedback.html', value=insertion_success)
-
-            #if input was correct go back to maintenance page
-        else:                                      # so create a route for maintenance too btw
-            return render_template('created.html')
+        else:                                    
+            return render_template('created.html_feedback.html', value=False)
     return render_template('created.html')
 
 
@@ -243,11 +182,11 @@ def produce():
             db.session.add(new_produced_song)
             db.session.commit()
 
-            # check if success or failure and render corresponding page
-            return redirect('produce_feedback.html')
-        else:                                      # so create a route for maintenance too btw
-            return render_template('produce.html')
+            return redirect('produce_feedback.html', value=True)
+        else:                                      
+            return render_template('produce_feedback.html', value=False)
     return render_template('produce.html')
+
 
 @views.route('/song_fb', methods=['POST', 'GET'])
 def song_fb():  
@@ -257,22 +196,14 @@ def song_fb():
         reference = request.form.get('reference')
 
         if song_id and feedback_id and reference:
-            insertion_success = False
-            try:
-                new_feedback_song = Song_fb(song_id, feedback_id, reference)
-                db.session.add(new_feedback_song)
-                db.session.commit()
-                insertion_success = True
-
-            except Exception as e:
-                db.session.rollback()
-                db.session.flush()
-
-            # check if success or failure and render corresponding page
-            return render_template('song_fb_feedback.html', value=insertion_success)
-        else:                                      # so create a route for maintenance too btw
-            return render_template('song_fb.html')
+            new_feedback_song = Song_fb(song_id, feedback_id, reference)
+            db.session.add(new_feedback_song)
+            db.session.commit()
+            return render_template('song_fb_feedback.html', value=True)
+        else:                                      
+            return render_template('song_fb_feedback.html', value=False)
     return render_template('song_fb.html')
+
 
 @views.route('/featured', methods=['POST', 'GET'])
 def featured():  
@@ -282,22 +213,12 @@ def featured():
         artist_count = request.form.get('ac')
 
         if artist_id and sid and artist_count:
-            insertion_success = False
-            try:
-                new_featured_song = Featured(artist_id, sid, artist_count)
-                db.session.add(new_featured_song)
-                db.session.commit()
-                insertion_success = True
-
-            except Exception as e:
-                db.session.rollback()
-                db.session.flush()
-
-            # check if success or failure and render corresponding page
-            return render_template('featured_feedback.html', value=insertion_success)
-            
-        else:                                      # so create a route for maintenance too btw
-            return render_template('featured.html')
+            new_featured_song = Featured(artist_id, sid, artist_count)
+            db.session.add(new_featured_song)
+            db.session.commit()
+            return render_template('featured_feedback.html', value=True)    
+        else:                                      
+            return render_template('featured_feedback.html', value=False)
     return render_template('featured.html')
 
 

@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>features</title>
-</head>
-<body>
-    <div class="mb-3">
-        <label for="name" class="form-label">Featured Song Name</label>
-        <input type="text" name="name" class="form-control" id="formGroupExampleInput" placeholder="Enter song name">
-      </div>
-      <div class="mb-3">
-        <label for="length" class="form-label">Song ID of Song from Song Table</label>
-        <input type="number" step="1" name="sid" class="form-control" id="formGroupExampleInput2" placeholder="Enter the id">
-      </div>   
-      <br>
-      <a href="/feedfiles/features.html">
-        <button type="button" class="btn btn-primary">Send message</button></body>
-        </a>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Features</title>
+	</head>
+	<body style="text-align: center;">
+		<form method="post" action="/feature">
+			<div class="mb-3">
+				<label for="name" class="form-label">Featured Song Name</label>
+				<input type="text" name="name" class="form-control" id="formGroupExampleInput" placeholder="Enter song name">
+			</div>
+			<div class="mb-3">
+				<label for="length" class="form-label">Song ID of Song from Song Table</label>
+				<input type="number" step="1" name="sid" class="form-control" id="formGroupExampleInput2" placeholder="Enter the id">
+			</div> 
+
+			<br>
+				<button type="submit" class="btn btn-primary">Send message</button>
+		</form>
+	</body>
+	
 </html>
