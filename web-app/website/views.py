@@ -203,7 +203,6 @@ def song_fb():
 
         if s and f and reference:
             new_feedback_song = Song_fb(s, f, reference)
-            print(new_feedback_song)
             db.session.add(new_feedback_song)
             db.session.commit()
             return render_template('song_fb_feedback.html', value=True)

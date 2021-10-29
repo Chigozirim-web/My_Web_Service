@@ -3,8 +3,9 @@ from . import db
 
 class Song(db.Model):
     __tablename__ = 'Song'
+    __table_args__ = (db.UniqueConstraint('song_name'), )
     id = db.Column(db.Integer, primary_key=True)
-    song_name = db.Column(db.String(20))
+    song_name = db.Column(db.String(20), unique=True)
     song_length = db.Column(db.Integer)
 
     def __init__(self, name, length):
@@ -16,6 +17,7 @@ class Artist(db.Model):
     __tablename__='Artist'
     id = db.Column (db.Integer, primary_key=True)
     artist_name = db.Column (db.String(128))
+    __table_args__ = (db.UniqueConstraint('artist_name'), )
 
     def __init__(self, name):
         self.artist_name = name
@@ -24,6 +26,7 @@ class Artist(db.Model):
 
 class Band(db.Model):
     __tablename__='Band'
+    __table_args__ = (db.UniqueConstraint('artist_name'), )
     id = db.Column (db.Integer, primary_key=True)
     artist_name = db.Column (db.String(128))
     form_year = db.Column(db.Integer)
@@ -37,6 +40,7 @@ class Band(db.Model):
     
 class Singer(db.Model):
     __tablename__='Singer'
+    __table_args__ = (db.UniqueConstraint('artist_name'), )
     id = db.Column (db.Integer, primary_key=True)
     artist_name = db.Column (db.String(128))
     birth_year = db.Column(db.Integer)
@@ -48,6 +52,7 @@ class Singer(db.Model):
 
 class Album(db.Model):
     __tablename__ = 'Album'
+    __table_args__ = (db.UniqueConstraint('album_name'), )
     id = db.Column (db.Integer, primary_key=True)
     numTracks = db.Column(db.Integer)
     album_name = db.Column(db.String(128))
@@ -60,6 +65,7 @@ class Album(db.Model):
 
 class Genre(db.Model):
     __tablename__='Genre'
+    __table_args__ = (db.UniqueConstraint('genre_name'), )
     id = db.Column (db.Integer, primary_key=True)
     genre_name = db.Column (db.String(20))  
 
