@@ -6,12 +6,16 @@
         <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     </head>
     <body style="text-align: center;">
-        <div class="mx-20 text-center"></div>
-            {% if value == True %}
-                <h1 class="text-green-400">Insertion Successful!</h1>
-                {% else %}
-                <h1 class="text-red-400">Insertion Failed! Please try again!</h1>
-            {% endif %}
+        <div class="mx-20 text-center">
+            {% if error == 1 or error == 2 %}
+            <h1 class="text-red-400">Either Album name or Number of Tracks input is missing or both
+                <br> Insertion failed
+            </h1>
+            {% elif error == 4 %}
+            <h1 class="text-red-400">Album exists already. Please try again!</h1>
+            {% elif error == 3 %}
+            <h1 class="text-green-400"> Insertion Successful! </h1>
+        {% endif %}
         </div>
         
         <br />

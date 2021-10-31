@@ -1,10 +1,15 @@
 
 from os import error
 from flask import Blueprint, render_template, request, redirect
-from sqlalchemy import text
+from sqlalchemy import text, exc
 from flask.helpers import url_for
 
 from .model import db, Song, Artist, Band, Singer, Feature, Album, Genre, Rating, Created, Featured, Produce_a, Song_fb
+
+#BELOW:
+#error 1 or 2 means an input is missing
+#error 3 means successful (yes it's kinda misleading, but didn't want to change variable)
+#error 4 means Integrity error (input already exists)
 
 views = Blueprint('views', __name__)
 
@@ -25,14 +30,22 @@ def song():
     if request.method == 'POST':
         song_name = request.form.get('name')
         song_length = request.form.get('length')
-
+        if not song_name:
+            error = 1
+        if not song_length:
+            error = 2
         if song_name and song_length:
-            record = Song(song_name, song_length)
-            db.session.add(record)
-            db.session.commit()
-            return render_template('song_feedback.html', value=True)
+            try:
+                record = Song(song_name, song_length)
+                db.session.add(record)
+                db.session.commit()
+                error = 3
+                return render_template('song_feedback.html', error=error)
+            except exc.IntegrityError:
+                error = 4
+                return render_template('song_feedback.html', error=error)
         else:                                    
-            return render_template('song_feedback.html', value=False)
+            return render_template('song_feedback.html', error=error)
     return render_template('song.html')
 
 
@@ -40,14 +53,19 @@ def song():
 def artist():  
     if request.method == 'POST':
         artist_name = request.form.get('name')
-
-        if artist_name:
-            record = Artist(artist_name)
-            db.session.add(record)
-            db.session.commit()
-            return render_template('artist_feedback.html' ,value=True)   
-        else:                                      
-            return render_template('artist_feedback.html', value=False)
+        if not artist_name:
+            error = 1                                              
+            return render_template('artist_feedback.html', error=error)
+        else:
+            try:
+                record = Artist(artist_name)
+                db.session.add(record)
+                db.session.commit()
+                error = 3
+                return render_template('artist_feedback.html', error=error)
+            except exc.IntegrityError:
+                error = 4
+                return render_template('artist_feedback.html', error=error)
     return render_template('artist.html')
 
 
@@ -57,13 +75,22 @@ def band():
         band_name = request.form.get('name')
         band_form_year = request.form.get('year')
 
+        if not band_name:
+            error = 1
+        if not band_form_year:
+            error = 2
         if band_name and band_form_year:
-            record = Band(band_name, band_form_year)
-            db.session.add(record)
-            db.session.commit()
-            return render_template('band_feedback.html', value=True)            
-        else:                                      
-            return render_template('band_feedback.html', value=False)
+            try:
+                record = Band(band_name, band_form_year)
+                db.session.add(record)
+                db.session.commit()
+                error = 3
+                return render_template('band_feedback.html', error=error)
+            except exc.IntegrityError:
+                error = 4
+                return render_template('band_feedback.html', error=error)
+        else:                                    
+            return render_template('band_feedback.html', error=error)
     return render_template('band.html')
 
 
@@ -73,30 +100,48 @@ def singer():
     if request.method == 'POST':
         singer_name = request.form.get('name')
         singer_birth_year = request.form.get('year')
-
+        if not singer_name:
+            error = 1
+        if not singer_birth_year:
+            error = 2
         if singer_name and singer_birth_year:
-            record = Singer(singer_name, singer_birth_year)
-            db.session.add(record)
-            db.session.commit()
-            return render_template('singer_feedback.html', value=True)
-        else:                                     
-            return render_template('singer_feedback.html', value=False)
+            try:
+                record = Singer(singer_name, singer_birth_year)
+                db.session.add(record)
+                db.session.commit()
+                error = 3
+                return render_template('singer_feedback.html', error=error)
+            except exc.IntegrityError:
+                error = 4
+                return render_template('singer_feedback.html', error=error)
+        else:                                    
+            return render_template('singer_feedback.html', error=error)
     return render_template('singer.html')
+
 
 
 @views.route('/album', methods=['POST', 'GET'])
 def album():  
     if request.method == 'POST':
-        numTracks = request.form.get("number")
+        numTracks = request.form.get("length")
         album_name = request.form.get('name')
 
+        if not numTracks:
+            error = 1
+        if not album_name:
+            error = 2
         if numTracks and album_name:
-            record = Album(numTracks, album_name)
-            db.session.add(record)
-            db.session.commit()
-            return render_template('album_feedback.html', value=True)       
-        else:                                      
-            return render_template('album_feedback.html', value=False)
+            try:
+                record = Album(numTracks, album_name)
+                db.session.add(record)
+                db.session.commit()
+                error = 3
+                return render_template('album_feedback.html', error=error)
+            except exc.IntegrityError:
+                error = 4
+                return render_template('album_feedback.html', error=error)
+        else:                                    
+            return render_template('album_feedback.html', error=error)
     return render_template('album.html')
 
 
@@ -105,14 +150,20 @@ def album():
 def genre():  
     if request.method == 'POST':
         genre_name = request.form.get('name')
-
-        if genre_name:
-            record = Genre(genre_name)
-            db.session.add(record)
-            db.session.commit()
-            return render_template('genre_feedback.html', value=True)
-        else:                                      
-            return render_template('genre_feedback.html', value=True)
+        
+        if not genre_name:
+            error = 1
+            return render_template('genre_feedback.html', error=error)
+        else:
+            try:
+                record = Genre(genre_name)
+                db.session.add(record)
+                db.session.commit()
+                error = 3
+                return render_template('genre_feedback.html', error=error)
+            except exc.IntegrityError:
+                error = 4
+                return render_template('genre_feedback.html', error=error)                                     
     return render_template('genre.html')
 
 
@@ -121,7 +172,7 @@ def genre():
 def rating():  
     if request.method == 'POST':
         stars = request.form.get('stars')
-
+        #No integrity constraints here...
         if stars:
             record = Rating(stars)
             db.session.add(record)
