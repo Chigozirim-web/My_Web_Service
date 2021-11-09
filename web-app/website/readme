@@ -1,2 +1,6 @@
 
 **Changes to be made in views.py to properly check errors in SQL database insertion
+
+And model.py to be edited:
+ Instead of creating new db models, let the db object from SQLAlchemy inherit
+ the already defined tables from the database
