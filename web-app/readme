@@ -2,4 +2,7 @@
 The .env file contains environment variables
 But this hasn't been included in the dev python file (yet)
 
+.wsgi file: to connect the FLASK app on an apache server
+.conf file: the configuration file for the apache server to run the python file(FLASK)
+
 To be run: main.py
