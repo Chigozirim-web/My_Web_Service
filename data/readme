@@ -3,3 +3,7 @@ I have written a python script for inserting into the tables.
 
 I got this data from me and my team members' entries into a spreadsheet I made and
 later convertd to a csv file for use in the python script
+
+This csv files only serve for initial poulation of the table in order to have some data to work with.
+
+As I progress, the database would be poulated from the website.
