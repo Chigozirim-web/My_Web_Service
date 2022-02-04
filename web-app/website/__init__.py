@@ -10,7 +10,7 @@ def create_app():
     app = Flask(__name__, static_folder='static')
     app.config['SECRET_KEY'] = 'hhhhhettytiu'  #to encrypt cookies 
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://group7:KVSzuH@localhost/group7"   #location of this database
+    app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://{USERNAME}:{PASSWORD}@localhost/{DB_NAME}"   #location of this database
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
     db.init_app(app)
